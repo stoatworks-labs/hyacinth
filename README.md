@@ -103,7 +103,7 @@ The defaults:
 
 ## Status
 
-**v0.1.0, unreleased** (2026-11-11). It lives in `~/dev/hyacinth` on `main`. It is not on GitHub or the website. No browser demo or OpenFX port yet.
+**v0.1.0, unreleased** (2026-11-11). The source is public at [github.com/stoatworks-labs/hyacinth](https://github.com/stoatworks-labs/hyacinth). There is no release yet, so no download. No browser demo or OpenFX port yet.
 
 ### Measured offline, on macOS
 

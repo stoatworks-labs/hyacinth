@@ -7,7 +7,7 @@ Shallow depth of field, bokeh and lens flare for Resolume Arena/Avenue, as an FF
 - **Focus:** a set distance, the depth at a point, or the depth of whatever a tracker is following.
 - **Build:** C++/GLSL, CMake MODULE → universal `.bundle` (macOS).
 - **Identity:** MIT. ID `HY01`, display name `SW Hyacinth`, bundle `com.stoatworks.ffgl.hyacinth`, v0.1.0.
-- **Status:** local only, in `~/dev/hyacinth` on `main`. Not on GitHub, not on the website, never loaded into Resolume.
+- **Status:** public at `github.com/stoatworks-labs/hyacinth`, checked out at `~/Projects/resolume/hyacinth`. Unreleased: no tag, no download. Never loaded into Resolume.
 
 The name is an oblique reference: Hyacinth Bucket insisted it was pronounced "Bouquet", and bouquet is close to bokeh.
 
@@ -51,7 +51,7 @@ Read `AGENTS.md` before changing the lens model, the aperture, the guided filter
 - **The checks can fail:** `--negative` (16 wrong models) and `tools/mutate.sh` (21 one-character mutants; `tools/mutate.sh TEXT` runs only the ones whose description contains TEXT).
 - **No dead controls:** `python3 tools/sweep.py` sweeps 42 controls, all live. `--bare` lists the ones that only act in context.
 - **Render cost:** `./build/hytest --bench`.
-- **CI** (`.github/workflows/ci.yml`): macOS arm64 build, `hytest --list` and `--offline`, glslc; a Windows x64 build through vcpkg's GLEW. It cannot run until the repo is on GitHub, and the fleet rule applies: no workflows on a private repo.
+- **CI** (`.github/workflows/ci.yml`): macOS arm64 build, `hytest --list` and `--offline`, glslc; a Windows x64 build through vcpkg's GLEW. The repo is public, so it runs on GitHub's free minutes. `release.yml` builds and publishes on a `v*` tag; a dispatch builds the Windows DLL without publishing, for the Arena gate.
 
 ## Notes
 

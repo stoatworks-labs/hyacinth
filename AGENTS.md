@@ -36,7 +36,7 @@ Everything the plugin draws comes from that line, a depth for every pixel, and o
 
 ## Decisions taken without asking
 
-- **Name and id.** `SW Hyacinth`, `HY01`, bundle `com.stoatworks.ffgl.hyacinth`, harness `hytest`. HY01 was checked free against the fleet's ids in `~/Projects/*/*/source` and `~/dev`. Built in `~/dev/hyacinth`; not moved, not on GitHub.
+- **Name and id.** `SW Hyacinth`, `HY01`, bundle `com.stoatworks.ffgl.hyacinth`, harness `hytest`. HY01 was checked free against the fleet's ids in `~/Projects/*/*/source` and `~/dev`. Built in `~/dev/hyacinth`, then moved to `~/Projects/resolume/hyacinth` and made public as `stoatworks-labs/hyacinth` (2026-11-11).
 - **Beside gaffer and tilter, not instead of them.** gaffer is a lens on a depth map the clip already has (Radial, Luma, Alpha, split halves), racked by the music through a focus puller and a rattling rig. tilter is a tilt-shift lens: a plane of focus across the frame. Hyacinth's own ground is everything else:
   - depth estimated from the picture (a plane to a horizon, haze, the subject's colours), snapped to its edges
   - focus that follows a tracked object
@@ -181,6 +181,6 @@ Three more were inside 320×180's wider bounds: the cat's eye's openings a fifth
 
 - Never loaded into Resolume, on macOS or Windows. Never built on Windows.
 - No presets, no user guide, no browser demo, no OpenFX port.
-- Not on GitHub or the website. The CI and release workflows are adapted and cannot run until it is, and then only if the repo is public.
+- Not released: no tag, no signed download, no video.
 - The fast guided filter's subsampling: detail finer than a quarter texel (4 px) is softened in Haze and Subject, and in Luma where a window's colour varies less than √ε.
 - The tracker follows translation only: no scale or rotation search.
