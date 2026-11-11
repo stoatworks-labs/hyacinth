@@ -37,7 +37,7 @@ jobs:
           cmake -B build
           -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_OSX_ARCHITECTURES=arm64
-          -DHOLOFOIL_BUILD_TOOLS=ON
+          -DHYACINTH_BUILD_TOOLS=ON
 
       - name: Build
         run: cmake --build build --config Release --parallel
@@ -84,7 +84,7 @@ jobs:
         run: >
           cmake -B build -A x64
           -DCMAKE_BUILD_TYPE=Release
-          -DHOLOFOIL_BUILD_TOOLS=OFF
+          -DHYACINTH_BUILD_TOOLS=OFF
           -DVCPKG_TARGET_TRIPLET=x64-windows-static-md
           -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
 
