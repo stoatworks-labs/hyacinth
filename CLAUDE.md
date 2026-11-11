@@ -7,7 +7,7 @@ Shallow depth of field, bokeh and lens flare for Resolume Arena/Avenue, as an FF
 - **Focus:** a set distance, the depth at a point, or the depth of whatever a tracker is following.
 - **Build:** C++/GLSL, CMake MODULE → universal `.bundle` (macOS).
 - **Identity:** MIT. ID `HY01`, display name `SW Hyacinth`, bundle `com.stoatworks.ffgl.hyacinth`, v0.1.0.
-- **Status:** public at `github.com/stoatworks-labs/hyacinth`, checked out at `~/Projects/resolume/hyacinth`. Unreleased: no tag, no download. Never loaded into Resolume.
+- **Status:** public at `github.com/stoatworks-labs/hyacinth`, checked out at `~/Projects/resolume/hyacinth`. Unreleased: no tag, no download. Never loaded into Resolume on macOS; on Windows the fleet's Arena gate passes on Arena 7.27.1.
 
 The name is an oblique reference: Hyacinth Bucket insisted it was pronounced "Bouquet", and bouquet is close to bokeh.
 
@@ -76,7 +76,7 @@ Read `AGENTS.md` before changing the lens model, the aperture, the guided filter
 
 ## Not done yet
 
-- Never loaded into Resolume on either platform. Never built on Windows. No presets, no browser demo, no OpenFX port.
+- Never loaded into Resolume on macOS. On Windows the fleet's Arena gate passes on Arena 7.27.1 (plugin-bench, `arena/expect/hyacinth.json`). No presets, no browser demo, no OpenFX port.
 
 ## Diagnostics
 

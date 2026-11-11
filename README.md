@@ -8,7 +8,7 @@
 > - **Passthrough:** at zero Mix the clip comes through bit for bit, and a sharp foreground hides the bokeh behind it bit for bit.
 > - **The checks can fail:** 16 negative controls and 21 one-character mutants show it.
 >
-> It has **never been loaded into Resolume**, on macOS or Windows, and has never been built on Windows. Full details are under [Status](#status).
+> On Windows it has been loaded into **Resolume Arena 7.27.1**, and every control that can act on a still picture changed Arena's picture. It has **never been loaded into Resolume on macOS**. Full details are under [Status](#status).
 
 Shallow depth of field, bokeh and lens flare, as an FFGL effect for [Resolume](https://resolume.com) Arena and Avenue. Give the clip a depth: a ground plane to a horizon, a radius round a point, its luma, its haze, whatever looks like the subject, its alpha, or a depth map packed beside it. Focus on a distance, a point, or a thing the tracker follows. The rest of the picture falls out of focus, and its highlights become the aperture: seven blades, a mirror lens's ring, a star or a heart. Or leave the picture sharp and add only the bokeh. Add orbs, lens flare and dirt on the glass, all the same aperture.
 
@@ -131,6 +131,15 @@ The defaults:
 | shaders | All 25 assembled stages compile through `glslc`, not only through Apple's driver. |
 | the bundle | Universal (`x86_64 arm64`), exports `plugMain` and ad-hoc signs. `oxbow`, a stand-in host, reads `SW Hyacinth` / `HY01` / `effect` and renders 120 frames through `plugMain`. |
 
+### In Resolume, on Windows
+
+The fleet's Arena gate ran the release workflow's own Windows build in **Resolume Arena 7.27.1** on win-lab, a test machine with no GPU (Mesa's software renderer): **9 passed, 0 failed, 1 skipped**.
+
+- The DLL loads, registers as `HY01` (an effect) and appears in Arena's effect list.
+- All 48 parameters Arena shows (its own Opacity and the plugin's 47) match their names, order, types, ranges and defaults. The two names at FFGL's 16-character limit arrive whole.
+- It renders, Arena's log has no shader or error lines, and Arena stays up.
+- Against a still picture, **all 40 of the plugin's controls that can act on one** changed Arena's picture, 27 of them with another control set first, as `tools/sweep.py` sets it (the aperture's on the widest blur, the flare's from a Light, the orbs' with some Orbs). The skip is Focus Speed, which only sets how fast the focus moves to a new distance: on a still, under a settled focus, it's the same picture at any setting. `hytest --focus` checks it offline. Grab and the About buttons are presses, which the gate doesn't send.
+
 ### Cost
 
 GPU time per frame on an M4 Max, the median of 60:
@@ -144,7 +153,7 @@ GPU time per frame on an M4 Max, the median of 60:
 
 ### Not established
 
-- **Never loaded into Resolume**, on either platform, and **never built on Windows**.
+- **Never loaded into Resolume on macOS.** On Windows, only on software rendering (win-lab), and only against a still picture.
 - **Subject, Haze and the tracker** have been checked only on synthetic pictures: a red square on blue, a hazed scene of saturated patches, a textured patch translating. Nothing has checked a subject that turns, grows or is hidden. The tracker searches translation only.
 - **The depth estimators are guesses at depth,** not measurements of it. Plane and Radial are exact for the scenes they describe. Subject, Haze and Luma are only as right as their assumptions about the picture. A real depth map, packed Side by Side, beats all of them.
 - **Detail finer than 4 px** is softened in an estimated depth (the guided filter's coefficients are computed at a quarter of the resolution).
@@ -173,7 +182,7 @@ cmake --install build
 
 The last one copies `Hyacinth.bundle` into `~/Documents/Resolume Arena/Extra Effects`. Restart Arena and it's under Effects as **SW Hyacinth**.
 
-Windows needs Visual Studio 2022 and vcpkg (for GLEW); see `.github/workflows/ci.yml`. It has not been tried.
+Windows needs Visual Studio 2022 and vcpkg (for GLEW); see `.github/workflows/ci.yml`. CI builds it that way on every push, and the release workflow's build is the one Arena loaded. Nobody has built it by hand.
 
 ## Building and testing
 

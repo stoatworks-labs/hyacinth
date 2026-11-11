@@ -31,9 +31,15 @@ focus on the ball, a flare from one light, and the defaults otherwise.*
 > parts in ten million. The tracker follows a moving subject to 0.06 px. At zero Mix the clip
 > comes through bit for bit. Sixteen models that are wrong on purpose and 21 one-character changes
 > to the shipped code are all caught, and all 42 controls measurably change the picture.
-> It's **never been loaded into Resolume**, on macOS or Windows. The one host it has run in is the
-> fleet's own test host, `oxbow`, on a Mac, for 120 frames. Nobody has held it up next to a real
-> lens's picture yet. Try it on a spare layer before you put it in a show.
+> It's **never been loaded into Resolume on macOS**. The one host it has run in on a Mac is the
+> fleet's own test host, `oxbow`, for 120 frames.
+> On Windows it **has been in Resolume**: the release workflow's own build, in Resolume Arena
+> 7.27.1 on a test machine with no GPU (software rendering). It registers, all 47 of its
+> parameters arrive as declared, it renders, Arena's log stays clean, and every control that can act
+> on a still picture changed Arena's picture. Focus Speed, which sets how fast the focus moves, can't
+> be judged on a still.
+> Nobody has held it up next to a real lens's picture yet. Try it on a spare layer before you put it
+> in a show.
 >
 > This codebase was created with AI assistance, directed and reviewed by a human author.
 
@@ -349,7 +355,8 @@ expect a clip packed with its depth map. For an ordinary clip, use another sourc
 - **Side by Side and Over Under output the picture half,** stretched to the frame, and at Mix 0 that
   stretched half is what comes through, not the packed clip.
 - **No presets.** The recipes above are the nearest thing. No browser demo yet either.
-- **Never loaded into Resolume**, and not compared against a real lens's picture.
+- **Never loaded into Resolume on macOS**, and not compared against a real lens's picture. On
+  Windows it has only run on software rendering, against a still picture.
 
 ---
 

@@ -92,14 +92,16 @@ Everything the plugin draws comes from that line, a depth for every pixel, and o
 - the clock's unit and origin; GL state handed back across a resize mid-track; bit-exact passthrough
 - every slider's range, cue sheets, 47 parameter names
 - a stand-in host (oxbow) loads it, reads its name, id and type, and renders 120 frames
+- on Windows, Resolume Arena 7.27.1 (win-lab, software rendering) loads the release workflow's DLL, reads all 47 parameters as declared, renders with a clean log, and every control that can act on a still changes its picture (plugin-bench's `arena/expect/hyacinth.json`: 9 passed, 0 failed, 1 skipped)
 
 **Assumed, not measured:**
 
-- That it looks right in Resolume. It has never been loaded into Resolume, on either platform.
+- That Resolume on macOS calls it as Arena on Windows and oxbow do. It has never been loaded in Resolume on a Mac.
+- That Focus Speed follows Arena's frames. The gate's carrier is a still under a settled focus, so the pull is checked only offline.
+- That it looks right in Resolume on real footage, or on a real GPU on Windows: the gate ran on software rendering.
 - That Subject, Haze and the tracker work on real footage. They were checked only on synthetic pictures: a red square on blue, a hazed scene of saturated patches, a textured patch translating. Nothing has checked a subject that turns, scales or is occluded.
 - That the defaults suit real footage, and that the ghost table and the flare's energies look like a real lens. Those are taste.
 - That a depth map from a depth-estimation tool, packed Side by Side, uses the convention here (white near). Depth Invert is there if not.
-- That it builds on Windows. It has never been built there.
 - The cost on any GPU but this Mac's.
 
 ## Would this hold on another rasteriser, at another raster?
@@ -179,7 +181,7 @@ Three more were inside 320×180's wider bounds: the cat's eye's openings a fifth
 
 ## Not done
 
-- Never loaded into Resolume, on macOS or Windows. Never built on Windows.
+- Never loaded into Resolume on macOS. On Windows, only on software rendering (win-lab), against a still.
 - No presets, no browser demo, no OpenFX port.
 - Not released: no tag, no signed download, no video.
 - The fast guided filter's subsampling: detail finer than a quarter texel (4 px) is softened in Haze and Subject, and in Luma where a window's colour varies less than √ε.
