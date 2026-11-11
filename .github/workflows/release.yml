@@ -1,0 +1,213 @@
+name: release
+
+# Build the Hyacinth FFGL effect for the two platforms Resolume runs on:
+#   - macOS   -> universal (arm64 + x86_64) Hyacinth.bundle
+#   - Windows -> x64 Hyacinth.dll (GLEW static-linked via vcpkg)
+# Each ships as a zip, with a .dmg for macOS and an installer for Windows.
+# Trigger manually (Actions > release > Run workflow) or by pushing a v* tag.
+#
+# Dispatching this manually is the cheap way to get a Windows build without
+# publishing anything: the release job below is gated on refs/tags/v*, so a
+# workflow_dispatch run builds both platforms and skips publication. That is
+# how the DLL tested in Arena on win-lab is the one a tag then ships.
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macos-15 and never macos-13: the Intel macOS runners are retired,
+          # so x86_64 is cross-compiled from Apple Silicon. CMakeLists.txt's
+          # CMAKE_OSX_ARCHITECTURES does that on its own.
+          - { name: macos-universal, os: macos-15 }
+          - { name: windows-x86_64,  os: windows-latest }
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      # Tools off: hytest links against zlib and CGL and is a developer
+      # harness, not something that ships. Its checks run locally via
+      # tools/verify.sh, and the GL-free ones in ci.yml.
+      - name: Configure (macOS)
+        if: runner.os == 'macOS'
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DHOLOFOIL_BUILD_TOOLS=OFF
+
+      # GLEW comes from vcpkg, static-linked (static-md keeps the CRT dynamic
+      # so the plugin matches the host) so the .dll has no external
+      # glew32.dll runtime dependency.
+      #
+      # Applocal off: with a static triplet there is no DLL for vcpkg to copy,
+      # and isohypse's two plugins once raced each other's copy step to an
+      # exit 32. One plugin cannot race, but the step has nothing to do.
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        run: >
+          cmake -B build -A x64
+          -DCMAKE_BUILD_TYPE=Release
+          -DHOLOFOIL_BUILD_TOOLS=OFF
+          -DVCPKG_APPLOCAL_DEPS=OFF
+          -DVCPKG_TARGET_TRIPLET=x64-windows-static-md
+          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      # The shipped DLL, loaded as a host loads it: see tools/wincheck.ps1.
+      # -Params is the control table plus the About block (its text and four
+      # buttons); it changes whenever either does.
+      - name: Check the DLL (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          ./tools/wincheck.ps1 -Dll "build/Release/Hyacinth.dll" -Name "SW Hyacinth" -Id HY01 -Kind effect -Params 46
+          if( $LASTEXITCODE ) { exit $LASTEXITCODE }
+
+      - name: Derive version
+        id: ver
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=0.0.0-dev.${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Collect artifact
+        shell: bash
+        run: |
+          mkdir -p out
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            cp -R "build/Hyacinth.bundle" "out/Hyacinth.bundle"
+            # Sanity-check the bundle really is universal and exports plugMain.
+            # An arm64-only build logs as a success, and a bundle that exports
+            # nothing loads cleanly and reports that it contains no plugins --
+            # neither failure is visible anywhere else in this workflow.
+            #
+            # Actions runs `shell: bash` as `bash -eo pipefail`, so `cmd | grep -q X`
+            # FAILS when grep FINDS its match: grep exits at once, the writer takes
+            # SIGPIPE, and pipefail reports the pipeline as failed. Captured and
+            # matched with `case` instead.
+            bin="out/Hyacinth.bundle/Contents/MacOS/Hyacinth"
+            __archs=$( lipo -archs "$bin" )
+            echo "architectures: $__archs"
+            case "$__archs" in
+              *x86_64*arm64* | *arm64*x86_64*) ;;
+              *) echo "expected x86_64 and arm64, got: $__archs"; exit 1 ;;
+            esac
+            __symbols=$( nm -gU "$bin" )
+            case "$__symbols" in
+              *_plugMain*) ;;
+              *) echo "expected _plugMain"; exit 1 ;;
+            esac
+          else
+            cp "build/Release/Hyacinth.dll" "out/Hyacinth.dll"
+          fi
+          # GLEW and the FFGL SDK are BSD-licensed and built into the binary,
+          # so their notices travel with it.
+          cp ATTRIBUTIONS.md out/
+          ls -R out
+
+      - name: Archive (zip)
+        shell: bash
+        run: |
+          cd out
+          if command -v 7z >/dev/null 2>&1; then
+            7z a "../hyacinth-${{ matrix.name }}.zip" ./*
+          else
+            zip -r "../hyacinth-${{ matrix.name }}.zip" ./*
+          fi
+
+      - name: Disk image (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        # A .dmg, but deliberately NOT a .pkg. An FFGL plugin's destination is
+        # per-user and edition-specific -- the README installs to
+        # ~/Documents/Resolume {Arena,Avenue}/Extra Effects -- so a .pkg would
+        # have to guess a path and would silently install to the wrong one for
+        # half of users.
+        run: |
+          source scripts/release-lib.sh
+          rl_init "Hyacinth" hyacinth "${{ steps.ver.outputs.version }}" \
+            com.stoatworks.hyacinth "$GITHUB_WORKSPACE"
+          cp README.md out/ 2>/dev/null || true
+          rl_adhoc_sign "out/Hyacinth.bundle"
+          rl_dmg "${{ matrix.name }}" out
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: hyacinth-${{ matrix.name }}
+          path: |
+            *.zip
+            *.dmg
+          if-no-files-found: error
+
+  windows-installer:
+    name: Windows installer
+    needs: build
+    runs-on: ubuntu-latest
+    # makensis cross-compiles, so the installer is wrapped here from the zip the
+    # Windows job uploaded. --ffgl installs per user, with no admin prompt, into
+    # Documents\Resolume Arena\Extra Effects (Avenue's when only Avenue is
+    # there): Resolume reads plugins from a folder per edition and never from
+    # Program Files. The directory page stays editable and names both.
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+
+      - name: Install NSIS
+        run: sudo apt-get update && sudo apt-get install -y nsis
+
+      - name: Build installer
+        shell: bash
+        run: |
+          source scripts/release-lib.sh
+          version="${GITHUB_REF_NAME#v}"
+          case "$version" in [0-9]*) ;; *) version="0.0.0" ;; esac
+          rl_init "Hyacinth" hyacinth "$version" com.stoatworks.hyacinth "$PWD/installers"
+          zip="$(find artifacts -name "hyacinth-windows-x86_64.zip" | head -1)"
+          if [ -z "$zip" ]; then echo "no Windows artefact, nothing to do"; exit 0; fi
+          stage="$RUNNER_TEMP/stage-win"
+          rm -rf "$stage"; mkdir -p "$stage"
+          unzip -q "$zip" -d "$stage"
+          cp README.md "$stage/" 2>/dev/null || true
+          # --ffgl: --plain's restraint (no shortcut, no PATH entry: nib#2's
+          # unguarded PATH write once wiped a system PATH), in the folder
+          # Resolume reads. Hyacinth.dll goes in Extra Effects itself; the
+          # README, notices and uninstaller in a Hyacinth folder beside it.
+          rl_nsis windows-x86_64 "$stage" --ffgl
+          ls -l installers
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: hyacinth-windows-installer
+          path: installers/*
+          if-no-files-found: warn
+
+  release:
+    name: Publish release
+    needs: [build, windows-installer]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v3
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true
