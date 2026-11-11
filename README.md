@@ -103,7 +103,7 @@ The defaults:
 
 ## Status
 
-**v0.1.0, unreleased** (2026-11-11). The source is public at [github.com/stoatworks-labs/hyacinth](https://github.com/stoatworks-labs/hyacinth). There is no release yet, so no download. The [user guide](docs/USER-GUIDE.md) covers every control. No browser demo or OpenFX port yet.
+**v0.1.0** (2026-11-11), the first release, public at [github.com/stoatworks-labs/hyacinth](https://github.com/stoatworks-labs/hyacinth). CI builds it for macOS and Windows on every push. The [user guide](docs/USER-GUIDE.md) covers every control. No browser demo or OpenFX port yet.
 
 ### Measured offline, on macOS
 

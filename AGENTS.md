@@ -183,6 +183,5 @@ Three more were inside 320×180's wider bounds: the cat's eye's openings a fifth
 
 - Never loaded into Resolume on macOS. On Windows, only on software rendering (win-lab), against a still.
 - No presets, no browser demo, no OpenFX port.
-- Not released: no tag, no signed download, no video.
 - The fast guided filter's subsampling: detail finer than a quarter texel (4 px) is softened in Haze and Subject, and in Luma where a window's colour varies less than √ε.
 - The tracker follows translation only: no scale or rotation search.

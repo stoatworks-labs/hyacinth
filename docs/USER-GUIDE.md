@@ -21,8 +21,8 @@ nearly bokeh.
 *Rendered by `hytest`, the offline harness, not captured from Resolume. Its own test street, the
 focus on the ball, a flare from one light, and the defaults otherwise.*
 
-> **Before you rely on this:** it's at **v0.1.0** and very early days, and **not released yet**:
-> there's no download, only the source. Its behaviour is measured rather than asserted, by a
+> **Before you rely on this:** it's at **v0.1.0**, the first release, and very early days. Its
+> behaviour is measured rather than asserted, by a
 > harness (`hytest`) that drives the plugin's own code in a headless GL context on one Apple
 > Silicon Mac (macOS 26), at 1280×720 and 320×180 and again on Apple's software renderer. A
 > defocused point's disc is the size a thin lens says, to 0.03 px. It carries its highlight's
@@ -47,11 +47,8 @@ focus on the ball, a flare from one light, and the defaults otherwise.*
 
 ## Installing
 
-**There's no download yet.** v0.1.0 hasn't been released, so for now Hyacinth is
-[source on GitHub](https://github.com/stoatworks-labs/hyacinth) that you build yourself (the README
-says how, on macOS). When it's released, each download will carry one effect, **SW Hyacinth**
-(`Hyacinth.bundle` on macOS, `Hyacinth.dll` on Windows), to drop into Resolume's effects folder
-before restarting Resolume:
+Every download carries one effect, **SW Hyacinth** (`Hyacinth.bundle` on macOS, `Hyacinth.dll` on
+Windows). Drop it into Resolume's effects folder and restart Resolume:
 
 ```
 macOS    ~/Documents/Resolume Arena/Extra Effects/
@@ -60,6 +57,17 @@ Windows  %USERPROFILE%\Documents\Resolume Arena\Extra Effects\
 
 Avenue uses the same layout under its own folder name. The effect then shows up in the effects
 browser as **SW Hyacinth**.
+
+The macOS download is a universal build (Apple silicon and Intel), as a `.dmg` or a `.zip`. It's
+**Developer ID-signed and notarised** by the release pipeline after publication, so the bundle
+just loads. If macOS refuses a download, it's from before the signing, so download it again. The
+Windows download is an x64 installer or a `.zip`. The installer is for you alone, so it asks for
+no administrator password, and it starts on Arena's Extra Effects folder (Avenue's, if only Avenue
+is there); its folder page names both, if you want the other. `Hyacinth.dll` goes in that folder,
+and its README, notices and uninstaller in a `Hyacinth` folder beside it, where Resolume pays them
+no attention. Quit Resolume first. It isn't code-signed, so it trips SmartScreen once: **More
+info** → **Run anyway**. Or skip the installer, take `Hyacinth.dll` out of the `.zip` and drop it
+into the folder by hand.
 
 ---
 
