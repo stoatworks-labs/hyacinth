@@ -54,6 +54,10 @@ macOS builds are signed and notarised and open normally. The Windows builds are 
 
 <!-- downloads:end -->
 
+## Video
+
+[![Hyacinth: shallow depth of field, bokeh and lens flare, for Resolume](docs/video-thumb.png)](https://www.youtube.com/watch?v=JwTYxZKgWAY)
+
 ## The one idea
 
 **A thin lens focused at one distance blurs a point at another into a disc whose radius is linear in the difference of their nearnesses, 1/distance, not their distances:**
