@@ -70,7 +70,7 @@ jobs:
       - name: Check the DLL (Windows)
         if: runner.os == 'Windows'
         run: |
-          ./tools/wincheck.ps1 -Dll "build/Release/Hyacinth.dll" -Name "SW Hyacinth" -Id HY01 -Kind effect -Params 46
+          ./tools/wincheck.ps1 -Dll "build/Release/Hyacinth.dll" -Name "SW Hyacinth" -Id HY01 -Kind effect -Params 47
           if( $LASTEXITCODE ) { exit $LASTEXITCODE }
 
       - name: Derive version

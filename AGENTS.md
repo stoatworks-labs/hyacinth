@@ -55,7 +55,7 @@ Everything the plugin draws comes from that line, a depth for every pixel, and o
 - **The streak sends 4% of a light's energy** (`kStreakLight`). At first it sent 0.3% and was invisible at Streak 1. A real anamorphic flare is a few percent, and the control should do something at its top.
 - **The guided filter is the colour one, weighted** (see the traps). The luma version left an edge between two colours of similar luma soft over the whole window.
 - **Default Blur Size is 3% of the height per unit of nearness.** At 1080p the street's background lights, with focus on the ball, are 28 px discs. At 320×180 the same discs are 2 px and handed to the gather, so the sweep sets Blur Size to its top for the aperture's controls.
-- **The user guide is skipped,** as the brief says. The About block has three buttons (Project page, Source on GitHub, Support the work) and no User guide button until there is one.
+- **The user guide** (`docs/USER-GUIDE.md`) was written when the repo landed in the fleet (2026-11-11), not with the build. The About block, generated from the website's entry, has four buttons (User guide, Project page, Source on GitHub, Support the work), so the plugin has 47 parameters.
 
 ## The traps actually hit
 
@@ -90,7 +90,7 @@ Everything the plugin draws comes from that line, a depth for every pixel, and o
 - the focus pull's exponential, and Point
 - a moving textured subject tracked well under a fine step
 - the clock's unit and origin; GL state handed back across a resize mid-track; bit-exact passthrough
-- every slider's range, cue sheets, 46 parameter names
+- every slider's range, cue sheets, 47 parameter names
 - a stand-in host (oxbow) loads it, reads its name, id and type, and renders 120 frames
 
 **Assumed, not measured:**
@@ -180,7 +180,7 @@ Three more were inside 320×180's wider bounds: the cat's eye's openings a fifth
 ## Not done
 
 - Never loaded into Resolume, on macOS or Windows. Never built on Windows.
-- No presets, no user guide, no browser demo, no OpenFX port.
+- No presets, no browser demo, no OpenFX port.
 - Not released: no tag, no signed download, no video.
 - The fast guided filter's subsampling: detail finer than a quarter texel (4 px) is softened in Haze and Subject, and in Luma where a window's colour varies less than √ε.
 - The tracker follows translation only: no scale or rotation search.

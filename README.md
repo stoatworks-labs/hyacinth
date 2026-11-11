@@ -103,7 +103,7 @@ The defaults:
 
 ## Status
 
-**v0.1.0, unreleased** (2026-11-11). The source is public at [github.com/stoatworks-labs/hyacinth](https://github.com/stoatworks-labs/hyacinth). There is no release yet, so no download. No browser demo or OpenFX port yet.
+**v0.1.0, unreleased** (2026-11-11). The source is public at [github.com/stoatworks-labs/hyacinth](https://github.com/stoatworks-labs/hyacinth). There is no release yet, so no download. The [user guide](docs/USER-GUIDE.md) covers every control. No browser demo or OpenFX port yet.
 
 ### Measured offline, on macOS
 
@@ -124,7 +124,7 @@ The defaults:
 | `--clock` | A host clock 499,217,238 ms in renders the same take as one starting at 0 s: **0.0** difference. |
 | `--passthrough` | Mix 0 gives back the clip **bit for bit**, and the in-focus half of a picture comes through bit for bit at Mix 1. |
 | `--state` | The host's GL state comes back on four paths, across a resize while tracking. |
-| `--controls`, `--cues`, `--names` | No GL needed: every slider's ends and middle against the numbers above, cue sheets, and 46 parameter names. |
+| `--controls`, `--cues`, `--names` | No GL needed: every slider's ends and middle against the numbers above, cue sheets, and 47 parameter names. |
 | `--negative` | **16** deliberately wrong models, **16** caught. |
 | `tools/mutate.sh` | **21** one-character mutants (13 in the GLSL), **21** caught. |
 | `tools/sweep.py` | All **42** controls change the picture. |
@@ -202,3 +202,7 @@ Render a frame of your own:
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+<!-- attributions:start -->
+This project is built on other people's work — see [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
+<!-- attributions:end -->

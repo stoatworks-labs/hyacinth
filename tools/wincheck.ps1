@@ -2,7 +2,7 @@
     What a host sees of a built Windows DLL, with no GL and no Resolume.
 
         tools/wincheck.ps1 -Dll build/Release/Hyacinth.dll -Name "SW Hyacinth" -Id HY01 `
-                           -Kind effect -Params 46
+                           -Kind effect -Params 47
 
     It LOADS the DLL (so a missing runtime or dependency fails here, where
     dumpbin cannot see it), finds plugMain, and asks it what Resolume asks

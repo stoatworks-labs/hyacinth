@@ -114,7 +114,7 @@ SWEEP = {
 }
 
 # The About block: a text line and browser buttons, with no pixel to sweep.
-SKIP = {"About", "Project page", "Source on GitHub", "Support the work"}
+SKIP = {"About", "User guide", "Project page", "Source on GitHub", "Support the work"}
 
 
 def read_png(path):

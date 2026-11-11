@@ -72,11 +72,11 @@ Read `AGENTS.md` before changing the lens model, the aperture, the guided filter
 - **Allocate every buffer before binding any.** The SDK's Scoped* bindings restore 0 on exit, not what was bound before.
 - **The macOS build must be universal.** Check with `lipo`, never the build log.
 - **No trademarks** in the plugin's name, labels, options or any future preset names.
-- **Generated files:** `source/StoatworksAbout.h` (backend `scripts/sync-about.py`), `scripts/release-lib.sh` (the backend's `release/`), `.github/FUNDING.yml` (`sync-funding.sh`) and `.github/ISSUE_TEMPLATE/` (`sync-issue-templates.py`). The last two were copied from holofoil with the name changed by hand; re-run the backend's syncs when the repo lands. `ATTRIBUTIONS.md` is not here yet.
+- **Generated files:** `source/StoatworksAbout.h` (backend `scripts/sync-about.py`, from the website's `projects.json`), `ATTRIBUTIONS.md` and the README's attributions block (`sync-attributions.py`), `.github/ISSUE_TEMPLATE/` (`sync-issue-templates.py`), `.github/FUNDING.yml` (`sync-funding.sh`) and `scripts/release-lib.sh` (the backend's `release/`). `docs/USER-GUIDE.pdf` is built by the website's `scripts/build_guides.py hyacinth`. Never edit any of them here.
 
 ## Not done yet
 
-- Never loaded into Resolume on either platform. Never built on Windows. No presets, no user guide, no browser demo, no OpenFX port.
+- Never loaded into Resolume on either platform. Never built on Windows. No presets, no browser demo, no OpenFX port.
 
 ## Diagnostics
 
