@@ -22,6 +22,38 @@ The name is oblique: Hyacinth Bucket insisted on "Bouquet", and bouquet is nearl
 
 <sub>Shape: Iris (seven blades), Mirror, Star and Heart. Focus Depth 0.9 (Manual), Blur Size at its top, Bubble +0.5, at 640×360.</sub>
 
+<!-- downloads:start -->
+
+## Download
+
+**[v0.1.0](https://github.com/stoatworks-labs/hyacinth/releases/tag/v0.1.0)** — prebuilt for macOS and Windows. Pick your platform:
+
+<details>
+<summary><b>macOS</b> — Universal (Apple Silicon + Intel)</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| Universal (Apple Silicon + Intel) · .dmg disk image | [`hyacinth-0.1.0-macos-universal.dmg`](https://github.com/stoatworks-labs/hyacinth/releases/download/v0.1.0/hyacinth-0.1.0-macos-universal.dmg) | 286 KB |
+| Universal (Apple Silicon + Intel) · .zip archive | [`hyacinth-macos-universal.zip`](https://github.com/stoatworks-labs/hyacinth/releases/latest/download/hyacinth-macos-universal.zip) | 239 KB |
+
+</details>
+
+<details>
+<summary><b>Windows</b> — x64</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| x64 · .exe installer | [`hyacinth-0.1.0-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/hyacinth/releases/download/v0.1.0/hyacinth-0.1.0-windows-x86_64-setup.exe) | 244 KB |
+| x64 · .zip archive | [`hyacinth-windows-x86_64.zip`](https://github.com/stoatworks-labs/hyacinth/releases/latest/download/hyacinth-windows-x86_64.zip) | 139 KB |
+
+</details>
+
+All builds, checksums and release notes: [github.com/stoatworks-labs/hyacinth/releases](https://github.com/stoatworks-labs/hyacinth/releases).
+
+macOS builds are signed and notarised and open normally. The Windows builds are unsigned, so SmartScreen warns once.
+
+<!-- downloads:end -->
+
 ## The one idea
 
 **A thin lens focused at one distance blurs a point at another into a disc whose radius is linear in the difference of their nearnesses, 1/distance, not their distances:**
